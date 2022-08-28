@@ -22,6 +22,7 @@ export class SelectorPageComponent implements OnInit {
 
   regions: string[] = [];
   countries: CountrySmall[] = [];
+  alphaCode: string = '';
 
   constructor( private fb: FormBuilder,
                private countryService: CountryServicesService ) { }
@@ -31,10 +32,6 @@ export class SelectorPageComponent implements OnInit {
       this.regions = this.countryService.regions;
 
       //when the region changes
-      // this.form.get('region')?.valueChanges
-      //   .subscribe(region => this.countryService.getCountrByRegion(region)
-      //   .subscribe(countries => this.countries = countries))
-
       this.form.get('region')?.valueChanges
         .pipe(
           tap((_) => { this.form.get('country')?.reset('') }),
@@ -42,6 +39,11 @@ export class SelectorPageComponent implements OnInit {
         )
         .subscribe(countries => {
           this.countries = countries;
+        })
+       //when the country changes
+       this.form.get('country')?.valueChanges
+        .subscribe(code => {
+          console.log(code)
         })
   }
 
