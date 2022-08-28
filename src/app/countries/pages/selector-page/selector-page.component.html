@@ -39,9 +39,9 @@
             <select class="form-control"
                     formControlName="border">
                 <option value="">-- Select border --</option>
-                <option *ngFor="let country of countries"
-                        [value]="country.cca3">
-                        {{ country.name.common }}
+                <option *ngFor="let border of borders"
+                        [value]="border">
+                        {{ border}}
                 </option>
             </select>
         </div>

@@ -22,7 +22,7 @@ export class SelectorPageComponent implements OnInit {
 
   regions: string[] = [];
   countries: CountrySmall[] = [];
-  alphaCode: string = '';
+  borders: string[] = [];
 
   constructor( private fb: FormBuilder,
                private countryService: CountryServicesService ) { }
@@ -34,7 +34,9 @@ export class SelectorPageComponent implements OnInit {
       //when the region changes
       this.form.get('region')?.valueChanges
         .pipe(
-          tap((_) => { this.form.get('country')?.reset('') }),
+          tap( () => { 
+            this.form.get('country')?.reset('') 
+          }),
           switchMap(region => this.countryService.getCountrByRegion(region))
         )
         .subscribe(countries => {
@@ -42,8 +44,20 @@ export class SelectorPageComponent implements OnInit {
         })
        //when the country changes
        this.form.get('country')?.valueChanges
-        .subscribe(code => {
-          console.log(code)
+        .pipe(
+          tap( () => {
+            this.borders = [];
+            this.form.get('border')?.reset('') 
+          }),
+          switchMap(code => this.countryService.getCountryAlpha(code))
+        )
+        .subscribe(country => {
+          if (!country) {
+            return;
+          } else {
+            this.borders = country[0].borders;
+            console.log(this.borders)
+          }
         })
   }
 

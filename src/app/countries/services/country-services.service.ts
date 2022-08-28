@@ -22,14 +22,14 @@ export class CountryServicesService {
     return this.http.get<CountrySmall[]>(url);
   }
 
-  getCountryAlpha(code: string): Observable<Country | null> {
+  getCountryAlpha(code: string): Observable<Country[] | null> {
 
     if (!code) {
       return of(null)
     }
 
     const url = `${ this._baseUrl }/alpha/${ code }`
-    return this.http.get<Country>(url);
+    return this.http.get<Country[]>(url);
 
   }
 }
