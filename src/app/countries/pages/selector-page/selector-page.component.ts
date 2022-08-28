@@ -23,7 +23,7 @@ export class SelectorPageComponent implements OnInit {
   //selectors
   regions: string[] = [];
   countries: CountrySmall[] = [];
-  borders: string[] = [];
+  borders: CountrySmall[] = [];
 
   //UI
   loading: boolean = false;
@@ -56,15 +56,15 @@ export class SelectorPageComponent implements OnInit {
             this.form.get('border')?.reset('');
             this.loading = true;
           }),
-          switchMap(code => this.countryService.getCountryAlpha(code))
+          switchMap(code => this.countryService.getCountryAlpha(code)),
+          switchMap(country => this.countryService.getCountryCodes(country!))
         )
         .subscribe(country => {
-          if (!country) {
+          if (country.length > 0) {
+            this.borders = country
             this.loading = false;
-            return;
           } else {
-            this.borders = country[0].borders;
-            console.log(this.borders);
+            this.borders = [];
             this.loading = false;
           }
         })

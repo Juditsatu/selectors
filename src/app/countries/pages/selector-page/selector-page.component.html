@@ -40,8 +40,8 @@
                     formControlName="border">
                 <option value="">-- Select border --</option>
                 <option *ngFor="let border of borders"
-                        [value]="border">
-                        {{ border}}
+                        [value]="border.cca3">
+                        {{ border.name.common }}
                 </option>
             </select>
         </div>
